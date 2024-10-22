@@ -1,0 +1,9 @@
+Describe('Test Suite1', function()
+{
+  it('TestCase1', function()
+  {
+    Cy.Visit('')
+    cy.get('').should('have.text','')
+    cy.get('').click()  
+  })
+})
