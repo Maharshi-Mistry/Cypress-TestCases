@@ -36,3 +36,8 @@ Cypress.Commands.add('GetIframe', (Iframe)=>{
 
 //imported iframe commands by installing plugin and describe in the command file
 require('cypress-iframe')
+//visit website
+Cypress.Commands.add('Opencart',(login) =>{
+    return cy.visit('https://demo:dem0@demo.opencart.com/admin/index.php')
+})
+
