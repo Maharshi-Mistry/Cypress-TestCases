@@ -41,3 +41,6 @@ Cypress.Commands.add('Opencart',(login) =>{
     return cy.visit('https://demo:dem0@demo.opencart.com/admin/index.php')
 })
 
+//import Drag and drop plugin
+require('@4tw/cypress-drag-drop')
+
