@@ -44,3 +44,51 @@ Cypress.Commands.add('Opencart',(login) =>{
 //import Drag and drop plugin
 require('@4tw/cypress-drag-drop')
 
+//file upload package
+import 'cypress-file-upload';
+
+//Custom command to click on the link
+Cypress.Commands.add('ClickLink',(lable)=>{  //clicklink is first perameter we have introduce and (lable) is other perameter
+    cy.get('a').contains(lable).click() //get all the A tag and find for the lable we have pass and click on that link
+})
+
+//Override already created command
+/* Cypress.Commands.overwrite('contains', (originalFn, subject, filter, text, options = {}) =>{
+
+    if (typeof text === 'object'){
+        objects = text
+        text = filter
+        filter = undefined
+    }
+
+    options.matchCase = false
+    return originalFn(subject, filter, text, options)
+})
+*/
+
+Cypress.Commands.overwriteQuery(
+    "contains",
+    function (contains, filter, text, userOptions = {}) {
+  
+      // This is parameter resolution from Cypress v12.7.0 source
+      if (Cypress._.isRegExp(text)) {
+        // .contains(filter, text)
+        // Do nothing
+      } else if (Cypress._.isObject(text)) {
+        // .contains(text, userOptions)
+        userOptions = text
+        text = filter
+        filter = ''
+      } else if (Cypress._.isUndefined(text)) {
+        // .contains(text)
+        text = filter
+        filter = ''
+      }
+  
+      userOptions.matchCase = false;
+  
+      let contains0 = contains.bind(this)    // this line fixes the error
+  
+      return contains0(filter, text, userOptions)
+    }
+  )
