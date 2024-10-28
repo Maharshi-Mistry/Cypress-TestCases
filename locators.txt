@@ -1,0 +1,179 @@
+when you get no test found error then that means there is any syntax error
+
+locators
+
+css selector
+xpath
+--cy.get(locator) to locate the element
+
+css selector - get method
+---- Multiple ways
+tag id -> Input#search_query_top
+tag class -> input.Class value
+tag attribute -> [attribute='value']
+tag class attribute -> c.class[attributr='value']
+
+-- tag is optional
+
+xpath xpath method
+---
+cy.xpath()
+cy,xpath().xpath() - chained xpath
+
+===============================================
+Assertions
+
+what is assertions = its a validation point to validate the scripts
+
+types of assertions
+- Implicit assertions = defaults(Built like should and And)
+	-Should
+	-And
+		contains
+		eq
+		exists
+		have.length
+		have.value
+		include
+		etc...
+	
+- Explicit Assertions = expect and assert
+
+	expect - BDD
+		expect(acctualName).to.equal(expName)
+	assert - TDD
+-- handle radio buttons and checkbox
+	Should(be.checked) - to verify its checked or not
+	should(be.visible) - visible or not
+	.check() - check the radio button
+-- handle dropdowns
+	.select('value') //selection
+	.should('have.value','value') //assertion and validation
+   Bootstrap drop down
+	.click()
+	get new text box, type('value').type('{enter}') //enter clicked
+	.should('have.text','value') //validation
+   auto suggestion(static dropdown)
+	get.contains('').click()
+   dynamic suggestion(dynamic)
+	jquery function
+	each.(actual element, Index, List of array)
+	each.($el, Index, $list)=>{
+	if($el.text()=='validation text')
+	{
+		cy.wrap($el).click()
+	}
+	else
+	{
+	}
+}
+
+    cy.visit("https://www.google.com/")
+    cy.get("textarea[title ='Search']").type('Hazel')
+    cy.wait(4000)
+    cy.get('div.wM6W7d>span').should('have.length','13')
+    cy.get('div.wM6W7d>span').each(($el, index, $list)=>{
+        if($el.text()=='hazel eyes')
+
+
+
+
+-------------
+Alerts
+1 simple alert close automatically
+	- to validate some message we need to write this function and event 
+        cy.on('window:alert',(Y)=>{
+
+            expect(Y).to.contains('I am a JS Alert')
+
+2. confirmation alert
+
+        })
+        
+        {
+            //wrap is used because it warp the text with element and then we can click or else it wont able to perform click action
+            cy.wrap($el).click()
+        }
+        })
+    cy.get("#APjFqb").should('have.value','hazel eyes')
+    
+})
+
+cy.on('window:confirm', ()=> false) //to close the alert with cancel button
+
+in js - let is a keyword to use define value
+input.classname > child tag(use to get perfect locators)
+
+---Prompt window
+
+- alert with text on
+in text on then we need to pass text before click on the button and alert triggers
+        cy.window().then((P)=>{
+            cy.stub(P,'prompt').returns('Welcome')
+        })
+
+-- authenticated alerts
+- pass the parameters along with the visit method
+		cy.visit("URL",{auth: {username: "", password: ""}})
+- inject the id password along with url 
+		cy.visit("https://admin:admin@the-internet.herokuapp.com/basic_auth")//pass username and password along with link only
+
+----------------
+handle child window and child tab
+- 2 approach
+1 approach - use invoke command : .invoke('removeAttr','element')
+	make a validation(url validation and text validation)
+2 define jquery function and visit to the new url
+	        cy.get(".example a").then((New)=>             //JQuery Function
+        {
+            const url = New.prop('href')              //Get the href link and store in URL define veriable element.prop('')
+
+            cy.visit(url)
+        })
+
+
+-- Iframes and nested frame
+-- Approach 1
+    it('Iframes1', function()
+    {
+        cy.visit('https://the-internet.herokuapp.com/iframe')
+        cy.wait(5000)
+        let iframe = cy.get('#mce_0_ifr')
+            .its('0.contentdocument.body')
+            .should('be.visible')
+            .then(cy.wrap)
+
+            iframe.clear().type('Welcome')
+    }
+    )
+
+
+
+approach 2
+own created command = in command file
+
+Cypress.Commands.add('GetIframe', (Iframe)=>{
+    return cy.get('Iframe')
+    .its('0.contentDocument.body')
+    .should('be.visible')
+    .then(cy.wrap)
+})
+
+approach 3
+iframe plugin check
+command cy.frameLoaded
+cy.get().click() // perform actions
+
+
+table:
+check the number of rows and column
+    it('Table count rows and columns', function(){
+        //test to count total row and total column and put assertions
+        cy.get("table[class='table table-bordered table-hover']>tbody>tr").should('have.length','10')//Count each row
+        cy.get("table[class='table table-bordered table-hover']>thead>tr>td").should('have.length','6')//count each column
+
+table tag>class and validate
+
+
+check the values
+ xpath tr:nth-child() td:nth-child()
