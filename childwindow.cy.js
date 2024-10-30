@@ -11,7 +11,7 @@ describe('Child window', function()
         cy.get("div[class='example'] h3").should('have.text','New Window')
         cy.wait(5000) // wait for 5 sec after validation on new tab
         //Navigate back to parent tab
-        cy.go('back') //.go is a cypress command
+        cy.go('back') //.go is a cypress command //use to parent tab
         cy.get('.example h3').should('have.contain','Opening')
     })
 
